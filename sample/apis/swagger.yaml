@@ -1,0 +1,145 @@
+openapi: 3.0.0
+info:
+  title: API Pólizas
+  description: API para la gestión de polizas
+  contact:
+    email: lopez.rodrigo@kopernicus.tech
+  license:
+    name: Apache 2.0
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
+  version: 1.0.0
+servers:
+- url: https://virtserver.swaggerhub.com/Rlopezg/polizas/1.0.0
+  description: SwaggerHub API Auto Mocking
+tags:
+- name: admins
+  description: Secured Admin-only calls
+- name: developers
+  description: Operations available to regular developers
+paths:
+  /polizas:
+    get:
+      tags:
+      - developers
+      summary: Consulta de pólizas
+      description: |
+        By passing in the appropriate options, you can search for
+        available inventory in the system
+      operationId: searchPolicy
+      parameters:
+      - name: searchString
+        in: query
+        description: pass an optional search string for looking up inventory
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: string
+      - name: skip
+        in: query
+        description: number of records to skip for pagination
+        required: false
+        style: form
+        explode: true
+        schema:
+          minimum: 0
+          type: integer
+          format: int32
+      - name: limit
+        in: query
+        description: maximum number of records to return
+        required: false
+        style: form
+        explode: true
+        schema:
+          maximum: 50
+          minimum: 0
+          type: integer
+          format: int32
+      responses:
+        "200":
+          description: search results matching criteria
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Poliza'
+        "400":
+          description: bad input parameter
+    post:
+      tags:
+      - admins
+      summary: Register a new policy
+      description: Register a new policy into the system
+      operationId: registerPolicy
+      requestBody:
+        description: Policy to add
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Poliza'
+      responses:
+        "201":
+          description: policy created
+        "400":
+          description: "invalid input, object invalid"
+        "409":
+          description: an existing policy already exists
+components:
+  schemas:
+    Poliza:
+      required:
+      - id
+      - policyNumber
+      - startDate
+      type: object
+      properties:
+        id:
+          type: number
+          example: 3453454532
+        policyNumber:
+          type: string
+          example: "4352"
+        startDate:
+          type: string
+          format: date-time
+          example: 2016-08-29T09:12:33.001Z
+        endDate:
+          type: string
+          format: date-time
+          example: 2016-08-29T09:12:33.001Z
+        policyHolder:
+          $ref: '#/components/schemas/Person'
+        coverages:
+          type: array
+          items:
+            $ref: '#/components/schemas/Coverage'
+    Coverage:
+      required:
+      - coverageType
+      type: object
+      properties:
+        id:
+          type: number
+          example: 76565665676
+        coverageType:
+          type: string
+          example: Fallecimiento
+        premium:
+          type: number
+          example: 100.0
+    Person:
+      required:
+      - name
+      type: object
+      properties:
+        id:
+          type: number
+          example: 76565665676
+        name:
+          type: string
+          example: Fallecimiento
+        email:
+          type: string
+          example: doe@mail.com
