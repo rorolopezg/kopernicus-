@@ -22,9 +22,9 @@ paths:
       tags:
       - developers
       summary: Consulta de pólizas.
-      description: |
-        By passing in the appropriate options, you can search for
-        available inventory in the system
+      description: "Permite obtener una lista de pólizas. El parámetro searchString\
+        \ es opcional y se puede utilizar para obtener subconjuntos de pólizas.  \
+        \                                                             \n"
       operationId: searchPolicy
       parameters:
       - name: searchString
@@ -71,7 +71,7 @@ paths:
       tags:
       - admins
       summary: Register a new policy
-      description: Register a new policy into the system
+      description: Registra una nueva póliza en el sistema.
       operationId: registerPolicy
       requestBody:
         description: Policy to add
@@ -115,6 +115,7 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/Coverage'
+      description: Contiene la información principal de una póliza.
     Coverage:
       required:
       - coverageType
@@ -129,6 +130,7 @@ components:
         premium:
           type: number
           example: 100.0
+      description: Covertura del seguro.
     Person:
       required:
       - name
@@ -143,3 +145,4 @@ components:
         email:
           type: string
           example: doe@mail.com
+      description: Representa a una persona natural o jurídica.
