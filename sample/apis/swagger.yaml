@@ -21,7 +21,7 @@ paths:
     get:
       tags:
       - developers
-      summary: Consulta de pólizas
+      summary: Consulta de pólizas.
       description: |
         By passing in the appropriate options, you can search for
         available inventory in the system
