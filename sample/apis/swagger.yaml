@@ -1,6 +1,6 @@
 openapi: 3.0.0
 info:
-  title: API Pólizas
+  title: API Pólizas!
   description: API para la gestión de polizas
   contact:
     email: lopez.rodrigo@kopernicus.tech
